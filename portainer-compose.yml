@@ -14,9 +14,17 @@ services:
 
     environment:
       OLLAMA_BASE_URL: "http://host.docker.internal:11434"
-      WEBUI_SECRET_KEY: ""
-
-      # Optional but useful
+      WEBUI_SECRET_KEY: "a938a6df980b6937fb8602d02fe35f8d88802f4afead0a54a370bec1691ceece"
       ENABLE_SIGNUP: "true"
+      NVIDIA_VISIBLE_DEVICES: "all"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
     restart: unless-stopped
