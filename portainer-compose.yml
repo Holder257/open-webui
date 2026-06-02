@@ -33,7 +33,7 @@ services:
             # Jupyter-backed code execution/interpreter
       ENABLE_CODE_EXECUTION: "true"
       CODE_EXECUTION_ENGINE: "jupyter"
-      CODE_EXECUTION_JUPYTER_URL: "http://jupyter:8998"
+      CODE_EXECUTION_JUPYTER_URL: "http://jupyter:8888"
       CODE_EXECUTION_JUPYTER_AUTH: "token"
       CODE_EXECUTION_JUPYTER_AUTH_TOKEN: "openwebui-code-token"
       CODE_EXECUTION_JUPYTER_TIMEOUT: "120"
