@@ -18,6 +18,13 @@ services:
       ENABLE_SIGNUP: "true"
       NVIDIA_VISIBLE_DEVICES: "all"
       NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+      
+      ENABLE_WEB_SEARCH: "true"
+      WEB_SEARCH_ENGINE: "duckduckgo"
+      WEB_SEARCH_RESULT_COUNT: "5"
+
+      # Important: use qwen3:8b to generate search queries
+      TASK_MODEL: "qwen3:8b"
 
       # Use your existing ComfyUI container through host port 3071
       ENABLE_IMAGE_GENERATION: "true"
