@@ -20,8 +20,8 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
       
       ENABLE_WEB_SEARCH: "true"
-      WEB_SEARCH_ENGINE: "duckduckgo"
-      WEB_SEARCH_RESULT_COUNT: "5"
+      WEB_SEARCH_ENGINE: "brave"
+      WEB_SEARCH_RESULT_COUNT: "10"
 
       # Important: use qwen3:8b to generate search queries
       TASK_MODEL: "qwen3:8b"
@@ -30,6 +30,21 @@ services:
       ENABLE_IMAGE_GENERATION: "true"
       COMFYUI_BASE_URL: "http://host.docker.internal:3071/"
 
+            # Jupyter-backed code execution/interpreter
+      ENABLE_CODE_EXECUTION: "true"
+      CODE_EXECUTION_ENGINE: "jupyter"
+      CODE_EXECUTION_JUPYTER_URL: "http://jupyter:8998"
+      CODE_EXECUTION_JUPYTER_AUTH: "token"
+      CODE_EXECUTION_JUPYTER_AUTH_TOKEN: "openwebui-code-token"
+      CODE_EXECUTION_JUPYTER_TIMEOUT: "120"
+
+      ENABLE_CODE_INTERPRETER: "true"
+      CODE_INTERPRETER_ENGINE: "jupyter"
+      CODE_INTERPRETER_JUPYTER_URL: "http://jupyter:8998"
+      CODE_INTERPRETER_JUPYTER_AUTH: "token"
+      CODE_INTERPRETER_JUPYTER_AUTH_TOKEN: "openwebui-code-token"
+      CODE_INTERPRETER_JUPYTER_TIMEOUT: "120"
+
     deploy:
       resources:
         reservations:
@@ -37,5 +52,56 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+    depends_on:
+      - jupyter
+
+    restart: unless-stopped
+
+    
+
+  jupyter:
+    container_name: open-webui-jupyter
+    image: quay.io/jupyter/scipy-notebook:latest
+
+    ports:
+      - "8998:8888"
+
+    volumes:
+      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/jupyter:/home/jovyan/work
+
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "openwebui-code-token"
+
+    command: >
+      start-notebook.py
+      --ServerApp.token=openwebui-code-token
+      --ServerApp.password=''
+      --ServerApp.allow_origin='*'
+      --ServerApp.ip=0.0.0.0
+      --ServerApp.port=8998
+      --ServerApp.allow_remote_access=True
+
+    restart: unless-stopped
+
+
+  code-server:
+    container_name: open-webui-vscode
+    image: lscr.io/linuxserver/code-server:latest
+
+    ports:
+      - "8993:8443"
+
+    volumes:
+      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/code-server:/config
+      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/jupyter:/workspace
+
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "America/Los_Angeles"
+      PASSWORD: "CHANGE_ME_STRONG_PASSWORD"
+      DEFAULT_WORKSPACE: "/workspace"
 
     restart: unless-stopped
