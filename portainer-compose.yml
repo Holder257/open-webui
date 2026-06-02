@@ -101,7 +101,7 @@ services:
       PUID: "1000"
       PGID: "1000"
       TZ: "America/Los_Angeles"
-      PASSWORD: "CHANGE_ME_STRONG_PASSWORD"
+      PASSWORD: "225733Hh"
       DEFAULT_WORKSPACE: "/workspace"
 
     restart: unless-stopped
