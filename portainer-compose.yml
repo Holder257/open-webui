@@ -4,7 +4,7 @@ services:
     image: ghcr.io/open-webui/open-webui:cuda
 
     ports:
-      - "3999:8080"
+      - "8080:8080"
 
     volumes:
       - /media/hunter/12TB_Youtube/Docker-applications/open-webui/data:/app/backend/data
@@ -65,7 +65,7 @@ services:
     image: quay.io/jupyter/scipy-notebook:latest
 
     ports:
-      - "8998:8888"
+      - "8888:8888"
 
     volumes:
       - /media/hunter/12TB_Youtube/Docker-applications/open-webui/jupyter:/home/jovyan/work
@@ -91,7 +91,7 @@ services:
     image: lscr.io/linuxserver/code-server:latest
 
     ports:
-      - "8993:8443"
+      - "8443:8443"
 
     volumes:
       - /media/hunter/12TB_Youtube/Docker-applications/open-webui/code-server:/config
@@ -101,7 +101,7 @@ services:
       PUID: "1000"
       PGID: "1000"
       TZ: "America/Los_Angeles"
-      PASSWORD: "225733Hh"
+      PASSWORD: "Change_Password"
       DEFAULT_WORKSPACE: "/workspace"
 
     restart: unless-stopped
