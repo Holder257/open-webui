@@ -7,14 +7,14 @@ services:
       - "8080:8080"
 
     volumes:
-      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/data:/app/backend/data
+      - open-webui/data:/app/backend/data
 
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
     environment:
       OLLAMA_BASE_URL: "http://host.docker.internal:11434"
-      WEBUI_SECRET_KEY: "a938a6df980b6937fb8602d02fe35f8d88802f4afead0a54a370bec1691ceece"
+      WEBUI_SECRET_KEY: ""
       ENABLE_SIGNUP: "true"
       NVIDIA_VISIBLE_DEVICES: "all"
       NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
@@ -68,7 +68,7 @@ services:
       - "8888:8888"
 
     volumes:
-      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/jupyter:/home/jovyan/work
+      - open-webui/jupyter:/home/jovyan/work
 
     environment:
       JUPYTER_ENABLE_LAB: "yes"
@@ -94,8 +94,8 @@ services:
       - "8443:8443"
 
     volumes:
-      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/code-server:/config
-      - /media/hunter/12TB_Youtube/Docker-applications/open-webui/jupyter:/workspace
+      - open-webui/code-server:/config
+      - open-webui/jupyter:/workspace
 
     environment:
       PUID: "1000"
